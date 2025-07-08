@@ -18,13 +18,13 @@
         :root {
             /* Realistic drum colors */
             --kick-color: #8B4513;
-            --snare-color: #C0C0C0;
+            --snare-color: #654321; /* Changed from silver to dark brown */
             --tom-color: #CD853F;
             --clap-color: #D2691E;
             --claves-color: #A0522D;
-            --hihat-color: #FFD700;
+            --hihat-color: #8B6914; /* Changed from gold to dark brass/bronze */
             --crash-color: #B8860B;
-            --shaker-color: #DEB887;
+            --shaker-color: #A0522D; /* Changed from light tan to darker brown */
             
             /* Base colors */
             --wood-brown: #3E2723;
@@ -44,10 +44,12 @@
             background: linear-gradient(135deg, #2C1810 0%, #1A1A1A 50%, #0D0D0D 100%);
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 20px;
             touch-action: manipulation;
+            position: relative;
         }
         
         /* Subtle wood grain background texture */
@@ -70,25 +72,62 @@
             opacity: 0.3;
         }
         
-        .drum-kit-title {
-            position: absolute;
-            top: 30px;
+        /* Audio visualizer at the very top */
+        .visualizer {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            text-align: center;
+            height: 120px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            z-index: 1; /* Behind the title */
+            pointer-events: none;
+            background: linear-gradient(to bottom, 
+                rgba(139, 69, 19, 0.1) 0%,
+                rgba(139, 69, 19, 0.2) 50%,
+                rgba(139, 69, 19, 0.3) 100%);
+            padding: 0 20px;
+        }
+        
+        .visualizer-bar {
+            width: 8px;
+            height: 4px;
+            border-radius: 4px;
+            transition: height 0.1s ease;
+            background: linear-gradient(to top, 
+                var(--brass-gold), 
+                var(--text-accent),
+                rgba(212, 175, 55, 0.8));
+            box-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
+            opacity: 0.8;
+        }
+        
+        .drum-kit-title {
+            position: fixed;
+            top: 30px; /* Positioned over the visualizer */
+            left: 50%;
+            transform: translateX(-50%);
             font-family: 'Roboto Slab', serif;
             font-size: 2.8rem;
             font-weight: 500;
             color: var(--text-accent);
             text-shadow: 
-                2px 2px 4px var(--shadow-dark),
-                0 0 10px rgba(212, 175, 55, 0.3);
+                3px 3px 6px rgba(0, 0, 0, 0.8),
+                2px 2px 4px rgba(0, 0, 0, 0.9),
+                1px 1px 2px rgba(0, 0, 0, 0.7),
+                0 0 15px rgba(212, 175, 55, 0.4);
             letter-spacing: 3px;
+            text-align: center;
+            z-index: 2; /* Above the visualizer */
         }
         
         .container {
             max-width: 900px;
             width: 100%;
             padding: 40px;
+            margin-top: 140px; /* Space for visualizer and title */
             background: linear-gradient(145deg, 
                 rgba(62, 39, 35, 0.95) 0%, 
                 rgba(46, 26, 20, 0.95) 50%, 
@@ -101,6 +140,7 @@
                 0 0 50px rgba(139, 69, 19, 0.1);
             position: relative;
             overflow: hidden;
+            z-index: 3; /* Above everything else */
         }
         
         /* Wood grain effect on container */
@@ -123,35 +163,6 @@
             pointer-events: none;
         }
         
-        /* Audio visualizer with drum-themed styling */
-        .visualizer {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            height: 60px;
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-around;
-            z-index: 1;
-            pointer-events: none;
-            background: linear-gradient(to top, 
-                rgba(139, 69, 19, 0.1) 0%, 
-                transparent 100%);
-            border-radius: 30px 30px 0 0;
-            padding: 0 10px;
-        }
-        
-        .visualizer-bar {
-            width: 6px;
-            height: 3px;
-            border-radius: 3px;
-            transition: height 0.1s ease;
-            background: linear-gradient(to top, var(--brass-gold), var(--text-accent));
-            box-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
-        }
-        
         .drum-pads {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -165,24 +176,19 @@
             position: relative;
             border: none;
             color: var(--text-light);
-            padding: 0;
+            padding: 15px;
             text-align: center;
             font-size: 28px;
             cursor: pointer;
-            border-radius: 50%;
+            border-radius: 15px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             user-select: none;
             touch-action: manipulation;
             overflow: hidden;
             
-            height: 13vh;
-            min-height: 100px;
-            max-height: 140px;
-            
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            height: 15vh;
+            min-height: 140px;
+            max-height: 180px;
             
             /* Base drum appearance */
             background: radial-gradient(circle at 30% 30%, 
@@ -206,9 +212,9 @@
         
         .drum-pad[data-key="2"] {
             --drum-color: var(--snare-color);
-            --drum-color-dark: #A0A0A0;
-            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3), transparent 70%),
-                        radial-gradient(circle at center, #C0C0C0, #808080);
+            --drum-color-dark: #4A2E1A;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.15), transparent 70%),
+                        radial-gradient(circle at center, #654321, #4A2E1A);
         }
         
         .drum-pad[data-key="3"] {
@@ -234,9 +240,9 @@
         
         .drum-pad[data-key="6"] {
             --drum-color: var(--hihat-color);
-            --drum-color-dark: #DAA520;
-            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.4), transparent 70%),
-                        radial-gradient(circle at center, #FFD700, #B8860B);
+            --drum-color-dark: #654321;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.15), transparent 70%),
+                        radial-gradient(circle at center, #8B6914, #654321);
         }
         
         .drum-pad[data-key="7"] {
@@ -248,9 +254,9 @@
         
         .drum-pad[data-key="8"] {
             --drum-color: var(--shaker-color);
-            --drum-color-dark: #A0522D;
-            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.2), transparent 70%),
-                        radial-gradient(circle at center, #DEB887, #8B7765);
+            --drum-color-dark: #654321;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.15), transparent 70%),
+                        radial-gradient(circle at center, #A0522D, #654321);
         }
         
         .drum-pad:hover {
@@ -279,7 +285,7 @@
             background: radial-gradient(circle at center, 
                 rgba(255, 255, 255, 0.3), 
                 transparent 70%);
-            border-radius: 50%;
+            border-radius: 15px;
             animation: drum-hit 0.4s ease-out;
         }
         
@@ -288,22 +294,71 @@
             100% { opacity: 0; transform: scale(1.3); }
         }
         
-        .pad-number {
-            font-size: 18px;
+        /* Full-size drum image that fills the entire pad */
+        .drum-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1; /* Behind the text but above the background */
+            border-radius: 15px; /* Match the pad border radius */
+            overflow: hidden;
+        }
+        
+        .drum-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Maintain aspect ratio while filling the space */
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+        }
+        
+        /* Text overlay positioned at the bottom with enhanced visibility - FULL WIDTH */
+        .sound-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            z-index: 3; /* Above everything else */
+            font-family: 'Inter', sans-serif;
+            font-size: 16.1px;
             font-weight: 600;
-            color: var(--text-accent);
-            margin-bottom: 5px;
-            text-shadow: 1px 1px 2px var(--shadow-dark);
+            color: var(--text-light);
+            text-shadow: 
+                2px 2px 4px rgba(0, 0, 0, 0.8),
+                1px 1px 2px rgba(0, 0, 0, 0.9),
+                0 0 8px rgba(0, 0, 0, 0.7); /* Enhanced text shadow for better visibility */
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: linear-gradient(to bottom, 
+                transparent 0%, 
+                rgba(0, 0, 0, 0.3) 50%, 
+                rgba(0, 0, 0, 0.5) 100%); /* Subtle background gradient for text readability */
+            padding: 15px 0;
+            border-radius: 0 0 15px 15px; /* Only bottom corners rounded */
+            box-sizing: border-box; /* Ensure padding doesn't affect width */
         }
         
         .sound-label {
-            font-family: 'Inter', sans-serif;
-            font-size: 14px;
-            font-weight: 500;
             color: var(--text-light);
-            text-shadow: 1px 1px 2px var(--shadow-dark);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        }
+        
+        .pad-number {
+            font-size: 18.4px;
+            font-weight: 700;
+            color: var(--text-accent);
+            text-shadow: 
+                2px 2px 4px rgba(0, 0, 0, 0.8),
+                1px 1px 2px rgba(0, 0, 0, 0.9),
+                0 0 8px rgba(0, 0, 0, 0.7);
         }
         
         .ripple {
@@ -312,7 +367,7 @@
             background-color: rgba(255, 255, 255, 0.6);
             transform: scale(0);
             animation: ripple 0.6s linear;
-            z-index: 3;
+            z-index: 4; /* Above everything */
         }
         
         @keyframes ripple {
@@ -327,7 +382,7 @@
             height: 100%;
             overflow: hidden;
             pointer-events: none;
-            z-index: 4;
+            z-index: 5; /* Highest z-index */
         }
         
         .particle {
@@ -353,24 +408,30 @@
                 gap: 15px; 
             }
             .drum-pad { 
-                height: 12vh; 
-                min-height: 80px; 
+                height: 16vh;
+                min-height: 120px;
+                padding: 12px;
+            }
+            .sound-info { 
+                font-size: 12.65px;
+                padding: 10px 0;
             }
             .pad-number { 
-                font-size: 16px; 
-            }
-            .sound-label { 
-                font-size: 12px; 
+                font-size: 14.95px;
             }
             .drum-kit-title { 
-                font-size: 2rem; 
-                top: 15px; 
+                font-size: 2rem;
+                top: 20px;
             }
             .container { 
-                padding: 20px; 
+                padding: 20px;
+                margin-top: 100px;
+            }
+            .visualizer { 
+                height: 80px;
             }
             .visualizer-bar { 
-                width: 4px; 
+                width: 6px; 
             }
         }
         
@@ -380,14 +441,30 @@
                 gap: 18px; 
             }
             .drum-pad { 
-                height: 13vh; 
-                min-height: 90px; 
+                height: 16vh;
+                min-height: 130px;
+                padding: 15px;
             }
-            .sound-label { 
-                font-size: 13px; 
+            .sound-info { 
+                font-size: 13.8px;
+                padding: 12px 0;
+            }
+            .pad-number { 
+                font-size: 16.1px;
             }
             .drum-kit-title { 
-                font-size: 2.3rem; 
+                font-size: 2.3rem;
+                top: 25px;
+            }
+            .container {
+                padding: 30px;
+                margin-top: 120px;
+            }
+            .visualizer {
+                height: 100px;
+            }
+            .visualizer-bar { 
+                width: 7px; 
             }
         }
         
@@ -397,50 +474,90 @@
                 gap: 20px; 
             }
             .drum-pad { 
-                height: 13vh; 
-                min-height: 100px; 
+                height: 15vh;
+                min-height: 140px; 
             }
         }
     </style>
 </head>
 <body>
+    <div class="visualizer"></div>
     <h1 class="drum-kit-title">Virtual Drum Kit</h1>
     
     <div class="container">
-        <div class="visualizer"></div>
         <div class="particles-container"></div>
         <div class="drum-pads">
             <button class="drum-pad" data-key="1">
-                <div class="pad-number">1</div>
-                <div class="sound-label">Kick</div>
+                <div class="drum-image">
+                    <img src="https://visualmusicalminds.github.io/images/virtualdrums-bass.png" alt="Bass Drum">
+                </div>
+                <div class="sound-info">
+                    <span class="sound-label">Bass</span>
+                    <span class="pad-number">-1-</span>
+                </div>
             </button>
             <button class="drum-pad" data-key="2">
-                <div class="pad-number">2</div>
-                <div class="sound-label">Snare</div>
+                <div class="drum-image">
+                    <img src="https://visualmusicalminds.github.io/images/virtualdrums-snare.png" alt="Snare Drum">
+                </div>
+                <div class="sound-info">
+                    <span class="sound-label">Snare</span>
+                    <span class="pad-number">-2-</span>
+                </div>
             </button>
             <button class="drum-pad" data-key="3">
-                <div class="pad-number">3</div>
-                <div class="sound-label">Tom</div>
+                <div class="drum-image">
+                    <img src="https://visualmusicalminds.github.io/images/virtualdrums-tom.png" alt="Tom Drum">
+                </div>
+                <div class="sound-info">
+                    <span class="sound-label">Tom</span>
+                    <span class="pad-number">-3-</span>
+                </div>
             </button>
             <button class="drum-pad" data-key="4">
-                <div class="pad-number">4</div>
-                <div class="sound-label">Clap</div>
+                <div class="drum-image">
+                    <img src="https://visualmusicalminds.github.io/images/virtualdrums-clap.png" alt="Hand Clap">
+                </div>
+                <div class="sound-info">
+                    <span class="sound-label">Clap</span>
+                    <span class="pad-number">-4-</span>
+                </div>
             </button>
             <button class="drum-pad" data-key="5">
-                <div class="pad-number">5</div>
-                <div class="sound-label">Claves</div>
+                <div class="drum-image">
+                    <img src="https://visualmusicalminds.github.io/images/virtualdrums-claves.png" alt="Claves">
+                </div>
+                <div class="sound-info">
+                    <span class="sound-label">Claves</span>
+                    <span class="pad-number">-5-</span>
+                </div>
             </button>
             <button class="drum-pad" data-key="6">
-                <div class="pad-number">6</div>
-                <div class="sound-label">Hi-Hat</div>
+                <div class="drum-image">
+                    <img src="https://visualmusicalminds.github.io/images/virtualdrums-highhat.png" alt="Hi-Hat">
+                </div>
+                <div class="sound-info">
+                    <span class="sound-label">Hi-Hat</span>
+                    <span class="pad-number">-6-</span>
+                </div>
             </button>
             <button class="drum-pad" data-key="7">
-                <div class="pad-number">7</div>
-                <div class="sound-label">Crash</div>
+                <div class="drum-image">
+                    <img src="https://visualmusicalminds.github.io/images/virtualdrums-crash.png" alt="Crash Cymbal">
+                </div>
+                <div class="sound-info">
+                    <span class="sound-label">Crash</span>
+                    <span class="pad-number">-7-</span>
+                </div>
             </button>
             <button class="drum-pad" data-key="8">
-                <div class="pad-number">8</div>
-                <div class="sound-label">Shaker</div>
+                <div class="drum-image">
+                    <img src="https://visualmusicalminds.github.io/images/virtualdrums-shaker.png" alt="Shaker">
+                </div>
+                <div class="sound-info">
+                    <span class="sound-label">Shaker</span>
+                    <span class="pad-number">-8-</span>
+                </div>
             </button>
         </div>
     </div>
@@ -463,7 +580,7 @@
                 
                 const visualizer = document.querySelector('.visualizer');
                 visualizer.innerHTML = '';
-                for (let i = 0; i < 40; i++) {
+                for (let i = 0; i < 60; i++) {
                     const bar = document.createElement('div');
                     bar.className = 'visualizer-bar';
                     visualizer.appendChild(bar);
@@ -479,17 +596,16 @@
             if (!analyser) return;
             analyser.getByteFrequencyData(dataArray);
             const bars = document.querySelectorAll('.visualizer-bar');
-            const containerHeight = document.querySelector('.container').clientHeight;
-            const maxHeight = 50;
+            const maxHeight = 100;
             
             for (let i = 0; i < bars.length; i++) {
                 const bar = bars[i];
                 const dataIndex = Math.floor(i * dataArray.length / bars.length);
-                let heightPercent = dataArray[dataIndex] ? dataArray[dataIndex] / 255 : Math.random() * 0.2;
+                let heightPercent = dataArray[dataIndex] ? dataArray[dataIndex] / 255 : Math.random() * 0.3;
                 const position = i / bars.length;
                 const curve = 1 - 4 * Math.pow(position - 0.5, 2);
-                heightPercent = heightPercent * (0.7 + 0.3 * curve);
-                let height = Math.max(heightPercent * maxHeight, 3);
+                heightPercent = heightPercent * (0.6 + 0.4 * curve);
+                let height = Math.max(heightPercent * maxHeight, 4);
                 bar.style.height = height + 'px';
             }
             drawVisual = requestAnimationFrame(animateVisualizer);
@@ -762,9 +878,9 @@
             for (let i = 0; i < bars.length; i++) {
                 const distance = Math.abs(i - centerIndex) / (bars.length / 2);
                 const boost = Math.exp(-5 * distance * distance) * soundInfo.volume;
-                const randomOffset = Math.random() * 0.2;
-                const currentHeight = parseInt(bars[i].style.height) || 3;
-                const boostHeight = (boost + randomOffset) * 50;
+                const randomOffset = Math.random() * 0.3;
+                const currentHeight = parseInt(bars[i].style.height) || 4;
+                const boostHeight = (boost + randomOffset) * 100;
                 bars[i].style.height = Math.max(currentHeight, boostHeight) + 'px';
             }
         }

@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyberpunk Drum Machine - Optimized - VisualMusicalMinds - 2025-05-22</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <title>Virtual Drum Set - VisualMusicalMinds - 2025-07-08</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fascinate&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto+Slab:wght@500&display=swap" rel="stylesheet">
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-        
         * {
             margin: 0;
             padding: 0;
@@ -18,223 +16,146 @@
         }
         
         :root {
-            --primary-glow: #0ff;
-            --secondary-glow: #f0f;
-            --third-glow: #ff0;
-            --pad1-color: #00a8ff;
-            --pad2-color: #ff5e57;
-            --pad3-color: #9733ee;
-            --pad4-color: #00b894;
-            --pad5-color: #fdcb6e;
-            --pad6-color: #00cec9;
-            --pad7-color: #e84393;
-            --pad8-color: #6c5ce7;
-            --pad-common: #2d3436;
-            --dark-bg: #111;
-            --text-color: #fff;
-            --grid-gap: 15px;
+            /* Realistic drum colors */
+            --kick-color: #8B4513;
+            --snare-color: #C0C0C0;
+            --tom-color: #CD853F;
+            --clap-color: #D2691E;
+            --claves-color: #A0522D;
+            --hihat-color: #FFD700;
+            --crash-color: #B8860B;
+            --shaker-color: #DEB887;
+            
+            /* Base colors */
+            --wood-brown: #3E2723;
+            --dark-wood: #2E1A14;
+            --metal-silver: #B8B8B8;
+            --brass-gold: #B8860B;
+            --background: #1A1A1A;
+            --text-light: #F5F5F5;
+            --text-accent: #D4AF37;
+            --shadow-dark: rgba(0, 0, 0, 0.4);
+            --highlight: rgba(255, 255, 255, 0.1);
         }
         
         body {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--text-color);
-            background-color: var(--dark-bg);
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(0, 168, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 90% 80%, rgba(255, 94, 87, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(151, 51, 238, 0.05) 0%, transparent 70%);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-light);
+            background: linear-gradient(135deg, #2C1810 0%, #1A1A1A 50%, #0D0D0D 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
-            position: relative;
             padding: 20px;
             touch-action: manipulation;
         }
         
-        /* Background grid lines - Made static */
+        /* Subtle wood grain background texture */
         body::before {
             content: "";
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            top: -50%;
-            left: -50%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-            background-position: center center;
-            transform: perspective(500px) rotateX(60deg);
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(139, 69, 19, 0.03) 2px,
+                    rgba(139, 69, 19, 0.03) 4px
+                );
             z-index: -1;
-            /* animation: grid-movement 30s linear infinite; */ /* Removed animation */
-        }
-        
-        /* Light orbs in background */
-        .light-orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(10px); /* Reduced blur */
             opacity: 0.3;
-            z-index: -1;
-            animation: float 15s ease-in-out infinite;
         }
         
-        .light-orb:nth-child(1) {
-            background-color: var(--primary-glow);
-            width: 300px;
-            height: 300px;
-            top: 10%;
-            left: 15%;
-            animation-delay: 0s;
-        }
-        
-        .light-orb:nth-child(2) {
-            background-color: var(--secondary-glow);
-            width: 200px;
-            height: 200px;
-            bottom: 10%;
-            right: 15%;
-            animation-delay: -5s;
-        }
-        
-        .light-orb:nth-child(3) {
-            background-color: var(--third-glow);
-            width: 250px;
-            height: 250px;
-            bottom: 20%;
-            left: 20%;
-            animation-delay: -10s;
-        }
-        
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0) translateX(0);
-            }
-            25% {
-                transform: translateY(-30px) translateX(20px);
-            }
-            50% {
-                transform: translateY(0) translateX(40px);
-            }
-            75% {
-                transform: translateY(30px) translateX(20px);
-            }
-        }
-        
-        .machine-title {
+        .drum-kit-title {
             position: absolute;
-            top: 20px;
+            top: 30px;
             width: 100%;
             text-align: center;
-            font-size: 2.5rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--text-color);
+            font-family: 'Roboto Slab', serif;
+            font-size: 2.8rem;
+            font-weight: 500;
+            color: var(--text-accent);
             text-shadow: 
-                0 0 5px var(--primary-glow),
-                0 0 10px var(--primary-glow),
-                0 0 15px var(--primary-glow);
-            opacity: 0.8;
-            transform: translateZ(0);
-            animation: title-glow 2s ease-in-out infinite alternate;
-        }
-        
-        @keyframes title-glow {
-            0% {
-                text-shadow: 
-                    0 0 5px var(--primary-glow),
-                    0 0 10px var(--primary-glow),
-                    0 0 15px var(--primary-glow);
-            }
-            100% {
-                text-shadow: 
-                    0 0 10px var(--primary-glow),
-                    0 0 20px var(--primary-glow),
-                    0 0 30px var(--primary-glow),
-                    0 0 40px var(--primary-glow);
-            }
+                2px 2px 4px var(--shadow-dark),
+                0 0 10px rgba(212, 175, 55, 0.3);
+            letter-spacing: 3px;
         }
         
         .container {
             max-width: 900px;
             width: 100%;
-            padding: 30px;
-            background: rgba(10, 10, 15, 0.85); /* Adjusted alpha, removed backdrop-filter */
-            border-radius: 15px;
-            /* backdrop-filter: blur(10px); */ /* Removed */
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            background: linear-gradient(145deg, 
+                rgba(62, 39, 35, 0.95) 0%, 
+                rgba(46, 26, 20, 0.95) 50%, 
+                rgba(30, 20, 15, 0.95) 100%);
+            border-radius: 20px;
+            border: 2px solid rgba(212, 175, 55, 0.2);
             box-shadow: 
-                0 0 20px rgba(0, 0, 0, 0.5),
-                0 0 30px rgba(0, 168, 255, 0.2),
-                0 0 40px rgba(151, 51, 238, 0.1);
+                0 10px 30px var(--shadow-dark),
+                inset 0 1px 0 var(--highlight),
+                0 0 50px rgba(139, 69, 19, 0.1);
             position: relative;
-            z-index: 1;
             overflow: hidden;
         }
         
-        /* Animated border glow - Simplified */
+        /* Wood grain effect on container */
         .container::before {
             content: "";
             position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            z-index: -1;
-            background: linear-gradient(45deg, 
-                var(--pad1-color), 
-                var(--pad2-color), 
-                var(--pad3-color), 
-                var(--pad4-color), 
-                var(--pad5-color), 
-                var(--pad6-color), 
-                var(--pad7-color), 
-                var(--pad8-color));
-            background-size: 500%; /* Keep for gradient, but animation is simpler */
-            border-radius: 16px;
-            opacity: 0.5;
-            /* filter: blur(5px); */ /* Removed blur */
-            animation: simpler-border-pulse 5s linear infinite alternate; /* Simplified animation */
-        }
-        
-        @keyframes simpler-border-pulse { /* New simpler animation */
-            0% {
-                opacity: 0.4;
-            }
-            100% {
-                opacity: 0.7;
-            }
-        }
-        
-        /* Visualizer behind the pads */
-        .visualizer {
-            position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-around;
-            padding: 20px;
-            z-index: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 3px,
+                    rgba(139, 69, 19, 0.05) 3px,
+                    rgba(139, 69, 19, 0.05) 6px
+                );
+            z-index: 1;
             pointer-events: none;
         }
         
+        /* Audio visualizer with drum-themed styling */
+        .visualizer {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 60px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            z-index: 1;
+            pointer-events: none;
+            background: linear-gradient(to top, 
+                rgba(139, 69, 19, 0.1) 0%, 
+                transparent 100%);
+            border-radius: 30px 30px 0 0;
+            padding: 0 10px;
+        }
+        
         .visualizer-bar {
-            width: 8px;
-            height: 5px;
-            border-radius: 4px;
+            width: 6px;
+            height: 3px;
+            border-radius: 3px;
             transition: height 0.1s ease;
-            opacity: 0.7;
+            background: linear-gradient(to top, var(--brass-gold), var(--text-accent));
+            box-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
         }
         
         .drum-pads {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: var(--grid-gap);
+            gap: 20px;
             margin: 0 auto;
             position: relative;
             z-index: 2;
@@ -242,139 +163,156 @@
         
         .drum-pad {
             position: relative;
-            /* background-color: var(--pad-common); */ /* Overridden below */
             border: none;
-            color: var(--text-color);
+            color: var(--text-light);
             padding: 0;
             text-align: center;
-            text-decoration: none;
             font-size: 28px;
             cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 
-                0 5px 15px rgba(0, 0, 0, 0.5),
-                0 0 0 2px rgba(255, 255, 255, 0.05);
-            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            border-radius: 50%;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             user-select: none;
             touch-action: manipulation;
             overflow: hidden;
             
             height: 13vh;
-            min-height: 80px;
-            max-height: 130px;
+            min-height: 100px;
+            max-height: 140px;
             
             display: flex;
-            flex-direction: row;
-            justify-content: flex-start;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
             
-            background-color: rgba(45, 52, 54, 0.9); /* Adjusted alpha, removed backdrop-filter */
-            /* backdrop-filter: blur(3px); */ /* Removed */
+            /* Base drum appearance */
+            background: radial-gradient(circle at 30% 30%, 
+                rgba(255, 255, 255, 0.2), 
+                transparent 60%),
+                linear-gradient(145deg, var(--drum-color), var(--drum-color-dark));
+            
+            box-shadow: 
+                0 8px 20px var(--shadow-dark),
+                inset 0 2px 0 rgba(255, 255, 255, 0.1),
+                inset 0 -2px 0 rgba(0, 0, 0, 0.2);
         }
         
-        .drum-pad[data-key="1"] { --pad-color: var(--pad1-color); }
-        .drum-pad[data-key="2"] { --pad-color: var(--pad2-color); }
-        .drum-pad[data-key="3"] { --pad-color: var(--pad3-color); }
-        .drum-pad[data-key="4"] { --pad-color: var(--pad4-color); }
-        .drum-pad[data-key="5"] { --pad-color: var(--pad5-color); }
-        .drum-pad[data-key="6"] { --pad-color: var(--pad6-color); }
-        .drum-pad[data-key="7"] { --pad-color: var(--pad7-color); }
-        .drum-pad[data-key="8"] { --pad-color: var(--pad8-color); }
-        
-        .drum-pad::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 8px;
-            padding: 2px;
-            background: linear-gradient(120deg, var(--pad-color), transparent, var(--pad-color));
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0.7;
-            transition: opacity 0.3s;
+        /* Individual drum colors and textures */
+        .drum-pad[data-key="1"] {
+            --drum-color: var(--kick-color);
+            --drum-color-dark: #654321;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.15), transparent 70%),
+                        radial-gradient(circle at center, #8B4513, #5D2F02);
         }
         
-        .drum-pad::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at center, var(--pad-color), transparent 70%);
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: 1;
-            pointer-events: none;
+        .drum-pad[data-key="2"] {
+            --drum-color: var(--snare-color);
+            --drum-color-dark: #A0A0A0;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3), transparent 70%),
+                        radial-gradient(circle at center, #C0C0C0, #808080);
+        }
+        
+        .drum-pad[data-key="3"] {
+            --drum-color: var(--tom-color);
+            --drum-color-dark: #A0522D;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.2), transparent 70%),
+                        radial-gradient(circle at center, #CD853F, #8B5A2B);
+        }
+        
+        .drum-pad[data-key="4"] {
+            --drum-color: var(--clap-color);
+            --drum-color-dark: #A0522D;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.2), transparent 70%),
+                        radial-gradient(circle at center, #D2691E, #A0522D);
+        }
+        
+        .drum-pad[data-key="5"] {
+            --drum-color: var(--claves-color);
+            --drum-color-dark: #8B4513;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.15), transparent 70%),
+                        radial-gradient(circle at center, #A0522D, #654321);
+        }
+        
+        .drum-pad[data-key="6"] {
+            --drum-color: var(--hihat-color);
+            --drum-color-dark: #DAA520;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.4), transparent 70%),
+                        radial-gradient(circle at center, #FFD700, #B8860B);
+        }
+        
+        .drum-pad[data-key="7"] {
+            --drum-color: var(--crash-color);
+            --drum-color-dark: #8B7355;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3), transparent 70%),
+                        radial-gradient(circle at center, #B8860B, #8B6914);
+        }
+        
+        .drum-pad[data-key="8"] {
+            --drum-color: var(--shaker-color);
+            --drum-color-dark: #A0522D;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.2), transparent 70%),
+                        radial-gradient(circle at center, #DEB887, #8B7765);
         }
         
         .drum-pad:hover {
-            transform: translateY(-2px);
+            transform: translateY(-3px) scale(1.02);
             box-shadow: 
-                0 7px 20px rgba(0, 0, 0, 0.6),
-                0 0 0 2px rgba(255, 255, 255, 0.1),
-                0 0 15px rgba(var(--pad-color), 0.5);
-        }
-        
-        .drum-pad:hover::before {
-            opacity: 1;
+                0 12px 25px var(--shadow-dark),
+                inset 0 3px 0 rgba(255, 255, 255, 0.15),
+                0 0 20px rgba(212, 175, 55, 0.3);
         }
         
         .drum-pad:active, .drum-pad.active {
-            transform: translateY(3px);
+            transform: translateY(2px) scale(0.98);
             box-shadow: 
-                0 2px 5px rgba(0, 0, 0, 0.7),
-                0 0 0 2px rgba(255, 255, 255, 0.12),
-                0 0 30px var(--pad-color);
+                0 4px 10px var(--shadow-dark),
+                inset 0 -2px 0 rgba(0, 0, 0, 0.3),
+                0 0 15px var(--drum-color);
         }
         
         .drum-pad.active::after {
-            opacity: 0.5;
-            animation: pulse 0.5s ease-out;
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, 
+                rgba(255, 255, 255, 0.3), 
+                transparent 70%);
+            border-radius: 50%;
+            animation: drum-hit 0.4s ease-out;
         }
         
-        @keyframes pulse {
-            0% { opacity: 0.5; transform: scale(1); }
-            100% { opacity: 0; transform: scale(1.5); }
+        @keyframes drum-hit {
+            0% { opacity: 0.8; transform: scale(1); }
+            100% { opacity: 0; transform: scale(1.3); }
         }
         
         .pad-number {
-            font-size: 32px;
-            font-weight: bold;
-            flex: 0 0 auto;
-            margin: 0 15px 0 25px;
-            color: var(--pad-color);
-            position: relative;
-            z-index: 2;
-            text-shadow: 0 0 5px var(--pad-color), 0 0 10px var(--pad-color);
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-accent);
+            margin-bottom: 5px;
+            text-shadow: 1px 1px 2px var(--shadow-dark);
         }
         
         .sound-label {
-            font-family: 'Fascinate', cursive;
-            font-size: 25px;
-            color: var(--text-color);
-            flex: 1 1 auto;
-            text-align: left;
-            position: relative;
-            z-index: 2;
-            opacity: 0.9;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-light);
+            text-shadow: 1px 1px 2px var(--shadow-dark);
+            text-transform: uppercase;
             letter-spacing: 1px;
-            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
         }
         
         .ripple {
             position: absolute;
             border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.4);
+            background-color: rgba(255, 255, 255, 0.6);
             transform: scale(0);
             animation: ripple 0.6s linear;
-            z-index: 0;
+            z-index: 3;
         }
         
         @keyframes ripple {
@@ -389,68 +327,121 @@
             height: 100%;
             overflow: hidden;
             pointer-events: none;
-            z-index: 3;
+            z-index: 4;
         }
         
         .particle {
             position: absolute;
-            width: 6px;
-            height: 6px;
-            background: white;
+            width: 4px;
+            height: 4px;
+            background: var(--text-accent);
             border-radius: 50%;
-            animation: particle-float 3s ease-in-out infinite;
+            animation: particle-float 2s ease-out infinite;
             opacity: 0;
-            z-index: 3;
+            box-shadow: 0 0 6px var(--text-accent);
         }
         
         @keyframes particle-float {
-            0% { transform: translateY(0) scale(1); opacity: 0.7; }
-            100% { transform: translateY(-100px) scale(0); opacity: 0; }
+            0% { transform: translateY(0) scale(1); opacity: 0.8; }
+            100% { transform: translateY(-80px) scale(0); opacity: 0; }
         }
         
+        /* Responsive design */
         @media (max-width: 480px) {
-            .drum-pads { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            .drum-pad { height: 10vh; min-height: 60px; }
-            .pad-number { margin: 0 8px 0 12px; font-size: 24px; }
-            .sound-label { font-size: 18px; }
-            .machine-title { font-size: 1.6rem; top: 10px; }
-            .container { padding: 12px; }
-            .visualizer-bar { width: 5px; }
+            .drum-pads { 
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 15px; 
+            }
+            .drum-pad { 
+                height: 12vh; 
+                min-height: 80px; 
+            }
+            .pad-number { 
+                font-size: 16px; 
+            }
+            .sound-label { 
+                font-size: 12px; 
+            }
+            .drum-kit-title { 
+                font-size: 2rem; 
+                top: 15px; 
+            }
+            .container { 
+                padding: 20px; 
+            }
+            .visualizer-bar { 
+                width: 4px; 
+            }
         }
         
         @media (min-width: 481px) and (max-width: 768px) {
-            .drum-pads { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-            .drum-pad { height: 11vh; min-height: 70px; }
-            .sound-label { font-size: 24px; }
-            .machine-title { font-size: 2rem; }
-            .visualizer-bar { width: 6px; }
+            .drum-pads { 
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 18px; 
+            }
+            .drum-pad { 
+                height: 13vh; 
+                min-height: 90px; 
+            }
+            .sound-label { 
+                font-size: 13px; 
+            }
+            .drum-kit-title { 
+                font-size: 2.3rem; 
+            }
         }
         
         @media (min-width: 769px) {
-            .drum-pads { grid-template-columns: repeat(4, 1fr); gap: 15px; }
-            .drum-pad { height: 13vh; min-height: 80px; }
+            .drum-pads { 
+                grid-template-columns: repeat(4, 1fr); 
+                gap: 20px; 
+            }
+            .drum-pad { 
+                height: 13vh; 
+                min-height: 100px; 
+            }
         }
     </style>
 </head>
 <body>
-    <div class="light-orb"></div>
-    <div class="light-orb"></div>
-    <div class="light-orb"></div>
-    
-    <h1 class="machine-title">Cyber Drums</h1>
+    <h1 class="drum-kit-title">Virtual Drum Kit</h1>
     
     <div class="container">
         <div class="visualizer"></div>
         <div class="particles-container"></div>
         <div class="drum-pads">
-            <button class="drum-pad" data-key="1"><div class="pad-number">1</div><div class="sound-label">Kick</div></button>
-            <button class="drum-pad" data-key="2"><div class="pad-number">2</div><div class="sound-label">Snare</div></button>
-            <button class="drum-pad" data-key="3"><div class="pad-number">3</div><div class="sound-label">Tom</div></button>
-            <button class="drum-pad" data-key="4"><div class="pad-number">4</div><div class="sound-label">Clap</div></button>
-            <button class="drum-pad" data-key="5"><div class="pad-number">5</div><div class="sound-label">Claves</div></button>
-            <button class="drum-pad" data-key="6"><div class="pad-number">6</div><div class="sound-label">Hi-hat</div></button>
-            <button class="drum-pad" data-key="7"><div class="pad-number">7</div><div class="sound-label">Crash</div></button>
-            <button class="drum-pad" data-key="8"><div class="pad-number">8</div><div class="sound-label">Shaker</div></button>
+            <button class="drum-pad" data-key="1">
+                <div class="pad-number">1</div>
+                <div class="sound-label">Kick</div>
+            </button>
+            <button class="drum-pad" data-key="2">
+                <div class="pad-number">2</div>
+                <div class="sound-label">Snare</div>
+            </button>
+            <button class="drum-pad" data-key="3">
+                <div class="pad-number">3</div>
+                <div class="sound-label">Tom</div>
+            </button>
+            <button class="drum-pad" data-key="4">
+                <div class="pad-number">4</div>
+                <div class="sound-label">Clap</div>
+            </button>
+            <button class="drum-pad" data-key="5">
+                <div class="pad-number">5</div>
+                <div class="sound-label">Claves</div>
+            </button>
+            <button class="drum-pad" data-key="6">
+                <div class="pad-number">6</div>
+                <div class="sound-label">Hi-Hat</div>
+            </button>
+            <button class="drum-pad" data-key="7">
+                <div class="pad-number">7</div>
+                <div class="sound-label">Crash</div>
+            </button>
+            <button class="drum-pad" data-key="8">
+                <div class="pad-number">8</div>
+                <div class="sound-label">Shaker</div>
+            </button>
         </div>
     </div>
 
@@ -489,7 +480,7 @@
             analyser.getByteFrequencyData(dataArray);
             const bars = document.querySelectorAll('.visualizer-bar');
             const containerHeight = document.querySelector('.container').clientHeight;
-            const maxHeight = containerHeight * 0.67;
+            const maxHeight = 50;
             
             for (let i = 0; i < bars.length; i++) {
                 const bar = bars[i];
@@ -498,11 +489,8 @@
                 const position = i / bars.length;
                 const curve = 1 - 4 * Math.pow(position - 0.5, 2);
                 heightPercent = heightPercent * (0.7 + 0.3 * curve);
-                let height = Math.max(heightPercent * maxHeight, 5);
+                let height = Math.max(heightPercent * maxHeight, 3);
                 bar.style.height = height + 'px';
-                const hue = 180 + (i / bars.length) * 180;
-                bar.style.background = `hsl(${hue}, 100%, 65%)`;
-                bar.style.boxShadow = `0 0 10px hsl(${hue}, 100%, 65%)`;
             }
             drawVisual = requestAnimationFrame(animateVisualizer);
         }
@@ -561,7 +549,7 @@
                 gain.gain.setValueAtTime(0, audioContext.currentTime); gain.gain.linearRampToValueAtTime(0.7, audioContext.currentTime + 0.001);
                 gain.gain.exponentialRampToValueAtTime(0.2, audioContext.currentTime + 0.03); gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
                 const distortion = audioContext.createWaveShaper();
-                function makeDistortionCurve(amount) { const k = typeof amount === 'number' ? amount : 50; const n_samples = 44100; const curve = new Float32Array(n_samples); for (let i = 0; i < n_samples; ++i) { const x = i * 2 / n_samples - 1; curve[i] = (Math.PI + k) * x / (Math.PI + k * Math.abs(x)); } return curve; }
+                function makeDistortionCurve(amount) { const k = typeof amount === 'number' ? amount : 50; const n_samples = 44100; const curve = new Float32Array(n_samples); for (let i = 0; i < n_samples; i++) { const x = (i * 2) / n_samples - 1; curve[i] = ((3 + k) * x * 20 * Math.PI / 180) / (Math.PI + k * Math.abs(x)); } return curve; }
                 distortion.curve = makeDistortionCurve(200); distortion.oversample = '4x';
                 const filter = audioContext.createBiquadFilter(); filter.type = 'bandpass'; filter.frequency.value = 2500; filter.Q.value = 8;
                 const filter2 = audioContext.createBiquadFilter(); filter2.type = 'peaking'; filter2.frequency.value = 800; filter2.gain.value = 3; filter2.Q.value = 2;
@@ -641,59 +629,142 @@
         
         document.querySelectorAll('.drum-pad').forEach(pad => {
             let isPressing = false; const key = pad.getAttribute('data-key');
-            pad.addEventListener('mousedown', function(e) { createRipple(e, this); });
-            pad.addEventListener('touchstart', function(e) { const touch = e.touches[0]; const rect = this.getBoundingClientRect(); const x = touch.clientX - rect.left; const y = touch.clientY - rect.top; createRipple({clientX: rect.left + x, clientY: rect.top + y}, this); }, { passive: false });
             
             function createRipple(event, button) {
-                const rect = button.getBoundingClientRect(); const x = event.clientX - rect.left; const y = event.clientY - rect.top;
-                const ripple = document.createElement('span'); ripple.className = 'ripple'; ripple.style.left = `${x}px`; ripple.style.top = `${y}px`;
-                button.appendChild(ripple); setTimeout(() => { ripple.remove(); }, 600);
+                const rect = button.getBoundingClientRect(); 
+                const x = event.clientX - rect.left; 
+                const y = event.clientY - rect.top;
+                const ripple = document.createElement('span'); 
+                ripple.className = 'ripple'; 
+                ripple.style.left = `${x}px`; 
+                ripple.style.top = `${y}px`;
+                button.appendChild(ripple); 
+                setTimeout(() => { ripple.remove(); }, 600);
             }
             
             pad.addEventListener('mousedown', function(e) {
+                createRipple(e, this);
                 if (!isPressing) {
-                    isPressing = true; const soundInfo = playSound(key); animatePad(key, soundInfo);
+                    isPressing = true; 
+                    const soundInfo = playSound(key); 
+                    animatePad(key, soundInfo);
                     if (repeatKeys.includes(key)) {
                         repeatTimers[key] = setTimeout(() => {
-                            const soundInfo = playSound(key); animatePad(key, soundInfo);
-                            repeatTimers[key] = setInterval(() => { const soundInfo = playSound(key); animatePad(key, soundInfo); }, sixteenthNoteMs);
+                            const soundInfo = playSound(key); 
+                            animatePad(key, soundInfo);
+                            repeatTimers[key] = setInterval(() => { 
+                                const soundInfo = playSound(key); 
+                                animatePad(key, soundInfo); 
+                            }, sixteenthNoteMs);
                         }, quarterNoteMs);
                     }
                 }
             });
-            pad.addEventListener('mouseup', function(e) { isPressing = false; if (repeatTimers[key]) { clearTimeout(repeatTimers[key]); clearInterval(repeatTimers[key]); repeatTimers[key] = null; } pad.classList.remove('active'); });
-            pad.addEventListener('mouseleave', function(e) { if (isPressing) { isPressing = false; if (repeatTimers[key]) { clearTimeout(repeatTimers[key]); clearInterval(repeatTimers[key]); repeatTimers[key] = null; } pad.classList.remove('active'); } });
-            pad.addEventListener('touchstart', function(e) { e.preventDefault(); if (!isPressing) { isPressing = true; const soundInfo = playSound(key); animatePad(key, soundInfo); if (repeatKeys.includes(key)) { repeatTimers[key] = setTimeout(() => { const soundInfo = playSound(key); animatePad(key, soundInfo); repeatTimers[key] = setInterval(() => { const soundInfo = playSound(key); animatePad(key, soundInfo); }, sixteenthNoteMs); }, quarterNoteMs); } } }, { passive: false });
-            pad.addEventListener('touchend', function(e) { e.preventDefault(); isPressing = false; if (repeatTimers[key]) { clearTimeout(repeatTimers[key]); clearInterval(repeatTimers[key]); repeatTimers[key] = null; } pad.classList.remove('active'); }, { passive: false });
-            pad.addEventListener('touchcancel', function(e) { isPressing = false; if (repeatTimers[key]) { clearTimeout(repeatTimers[key]); clearInterval(repeatTimers[key]); repeatTimers[key] = null; } pad.classList.remove('active'); });
-            pad.addEventListener('touchmove', function(e) { e.preventDefault(); }, { passive: false });
+            
+            pad.addEventListener('mouseup', function(e) { 
+                isPressing = false; 
+                if (repeatTimers[key]) { 
+                    clearTimeout(repeatTimers[key]); 
+                    clearInterval(repeatTimers[key]); 
+                    repeatTimers[key] = null; 
+                } 
+                pad.classList.remove('active'); 
+            });
+            
+            pad.addEventListener('mouseleave', function(e) { 
+                if (isPressing) { 
+                    isPressing = false; 
+                    if (repeatTimers[key]) { 
+                        clearTimeout(repeatTimers[key]); 
+                        clearInterval(repeatTimers[key]); 
+                        repeatTimers[key] = null; 
+                    } 
+                    pad.classList.remove('active'); 
+                } 
+            });
+            
+            pad.addEventListener('touchstart', function(e) { 
+                e.preventDefault(); 
+                const touch = e.touches[0]; 
+                const rect = this.getBoundingClientRect(); 
+                const x = touch.clientX - rect.left; 
+                const y = touch.clientY - rect.top;
+                createRipple({clientX: touch.clientX, clientY: touch.clientY}, this);
+                if (!isPressing) { 
+                    isPressing = true; 
+                    const soundInfo = playSound(key); 
+                    animatePad(key, soundInfo); 
+                    if (repeatKeys.includes(key)) {
+                        repeatTimers[key] = setTimeout(() => {
+                            const soundInfo = playSound(key); 
+                            animatePad(key, soundInfo);
+                            repeatTimers[key] = setInterval(() => { 
+                                const soundInfo = playSound(key); 
+                                animatePad(key, soundInfo); 
+                            }, sixteenthNoteMs);
+                        }, quarterNoteMs);
+                    }
+                } 
+            });
+            
+            pad.addEventListener('touchend', function(e) { 
+                e.preventDefault(); 
+                isPressing = false; 
+                if (repeatTimers[key]) { 
+                    clearTimeout(repeatTimers[key]); 
+                    clearInterval(repeatTimers[key]); 
+                    repeatTimers[key] = null; 
+                } 
+                pad.classList.remove('active'); 
+            });
+            
+            pad.addEventListener('touchcancel', function(e) { 
+                isPressing = false; 
+                if (repeatTimers[key]) { 
+                    clearTimeout(repeatTimers[key]); 
+                    clearInterval(repeatTimers[key]); 
+                    repeatTimers[key] = null; 
+                } 
+                pad.classList.remove('active'); 
+            });
+            
+            pad.addEventListener('touchmove', function(e) { 
+                e.preventDefault(); 
+            }, { passive: false });
         });
         
-        document.querySelector('.container').addEventListener('touchmove', function(e) { e.preventDefault(); }, { passive: false });
+        document.querySelector('.container').addEventListener('touchmove', function(e) { 
+            e.preventDefault(); 
+        }, { passive: false });
         
-        function playSound(key) { if (sounds[key]) { return sounds[key](); } return null; }
+        function playSound(key) { 
+            if (sounds[key]) { 
+                return sounds[key](); 
+            } 
+            return null; 
+        }
         
         function animatePad(key, soundInfo = null) {
             const pad = document.querySelector(`.drum-pad[data-key="${key}"]`);
             if (!pad) return;
-            pad.classList.remove('active'); setTimeout(() => { pad.classList.add('active'); }, 10);
+            pad.classList.remove('active'); 
+            setTimeout(() => { pad.classList.add('active'); }, 10);
             createParticles(pad, key);
-            // flashBackground(key); // Removed for performance
             if (soundInfo) { boostVisualizer(soundInfo); }
         }
         
         function boostVisualizer(soundInfo) {
             if (!soundInfo) return;
-            const bars = document.querySelectorAll('.visualizer-bar'); if (!bars.length) return;
+            const bars = document.querySelectorAll('.visualizer-bar'); 
+            if (!bars.length) return;
             const normalizedFreq = Math.min(Math.max(Math.log(soundInfo.frequency) / Math.log(10000), 0), 1);
             const centerIndex = Math.floor(normalizedFreq * bars.length);
             for (let i = 0; i < bars.length; i++) {
                 const distance = Math.abs(i - centerIndex) / (bars.length / 2);
                 const boost = Math.exp(-5 * distance * distance) * soundInfo.volume;
                 const randomOffset = Math.random() * 0.2;
-                const currentHeight = parseInt(bars[i].style.height) || 5;
-                const containerHeight = document.querySelector('.container').clientHeight;
-                const boostHeight = (boost + randomOffset) * containerHeight * 0.67;
+                const currentHeight = parseInt(bars[i].style.height) || 3;
+                const boostHeight = (boost + randomOffset) * 50;
                 bars[i].style.height = Math.max(currentHeight, boostHeight) + 'px';
             }
         }
@@ -703,42 +774,38 @@
             const padCenterX = rect.left + rect.width/2;
             const padCenterY = rect.top + rect.height/2;
             const particlesContainer = document.querySelector('.particles-container');
-            const padColor = getComputedStyle(document.documentElement).getPropertyValue(`--pad${key}-color`).trim();
             
-            for (let i = 0; i < 2; i++) { // Reduced particle count from 12 to 2
+            for (let i = 0; i < 3; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
-                const x = padCenterX - 3 + (Math.random() * 6);
-                const y = padCenterY - 3 + (Math.random() * 6);
-                particle.style.left = `${x}px`; particle.style.top = `${y}px`;
-                particle.style.background = padColor;
-                // particle.style.boxShadow = `0 0 6px ${padColor}`; // Removed for performance
-                const size = 2 + Math.random() * 4;
-                particle.style.width = `${size}px`; particle.style.height = `${size}px`;
-                const duration = 0.5 + Math.random() * 1; const delay = Math.random() * 0.2;
+                const x = padCenterX - 2 + (Math.random() * 4);
+                const y = padCenterY - 2 + (Math.random() * 4);
+                particle.style.left = `${x}px`; 
+                particle.style.top = `${y}px`;
+                const size = 2 + Math.random() * 3;
+                particle.style.width = `${size}px`; 
+                particle.style.height = `${size}px`;
+                const duration = 1 + Math.random() * 1; 
+                const delay = Math.random() * 0.2;
                 particle.style.animation = `particle-float ${duration}s ease-out ${delay}s`;
                 particlesContainer.appendChild(particle);
                 setTimeout(() => { particle.remove(); }, (duration + delay) * 1000);
             }
         }
         
-        // function flashBackground(key) { // Original function, now unused
-        //     const padColor = getComputedStyle(document.documentElement).getPropertyValue(`--pad${key}-color`).trim();
-        //     const flash = document.createElement('div');
-        //     flash.style.position = 'absolute'; flash.style.top = '0'; flash.style.left = '0';
-        //     flash.style.right = '0'; flash.style.bottom = '0'; flash.style.backgroundColor = padColor;
-        //     flash.style.opacity = '0.05'; flash.style.pointerEvents = 'none'; flash.style.zIndex = '-1';
-        //     flash.style.transition = 'opacity 0.5s ease-out';
-        //     document.body.appendChild(flash);
-        //     setTimeout(() => { flash.style.opacity = '0'; }, 50);
-        //     setTimeout(() => { flash.remove(); }, 550);
-        // }
-        
         document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'hidden') {
-                Object.keys(repeatTimers).forEach(key => { if (repeatTimers[key]) { clearTimeout(repeatTimers[key]); clearInterval(repeatTimers[key]); repeatTimers[key] = null; } });
+                Object.keys(repeatTimers).forEach(key => { 
+                    if (repeatTimers[key]) { 
+                        clearTimeout(repeatTimers[key]); 
+                        clearInterval(repeatTimers[key]); 
+                        repeatTimers[key] = null; 
+                    } 
+                });
                 Object.keys(heldKeys).forEach(key => { heldKeys[key] = false; });
-                document.querySelectorAll('.drum-pad.active').forEach(pad => { pad.classList.remove('active'); });
+                document.querySelectorAll('.drum-pad.active').forEach(pad => { 
+                    pad.classList.remove('active'); 
+                });
                 if (drawVisual) { cancelAnimationFrame(drawVisual); }
             } else if (document.visibilityState === 'visible') {
                 if (analyser) { animateVisualizer(); }
@@ -747,12 +814,22 @@
         
         let wakeLock = null;
         async function requestWakeLock() {
-            try { if ('wakeLock' in navigator) { wakeLock = await navigator.wakeLock.request('screen'); } }
-            catch (err) { console.log("Wake Lock error:", err); }
+            try { 
+                if ('wakeLock' in navigator) { 
+                    wakeLock = await navigator.wakeLock.request('screen'); 
+                } 
+            }
+            catch (err) { 
+                console.log("Wake Lock error:", err); 
+            }
         }
         document.addEventListener('click', requestWakeLock, { once: true });
         document.addEventListener('touchstart', requestWakeLock, { once: true });
-        document.addEventListener('visibilitychange', async () => { if (wakeLock !== null && document.visibilityState === 'visible') { await requestWakeLock(); } });
+        document.addEventListener('visibilitychange', async () => { 
+            if (wakeLock !== null && document.visibilityState === 'visible') { 
+                await requestWakeLock(); 
+            } 
+        });
     </script>
 </body>
 </html>

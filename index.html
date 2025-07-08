@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyberpunk Drum Machine - Optimized - VisualMusicalMinds - 2025-05-22</title>
+    <title>Virtual Drum Kit - VisualMusicalMinds - 2025-05-22</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fascinate&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto+Slab:wght@400;600&display=swap" rel="stylesheet">
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
         
         * {
             margin: 0;
@@ -18,31 +17,32 @@
         }
         
         :root {
-            --primary-glow: #0ff;
-            --secondary-glow: #f0f;
-            --third-glow: #ff0;
-            --pad1-color: #00a8ff;
-            --pad2-color: #ff5e57;
-            --pad3-color: #9733ee;
-            --pad4-color: #00b894;
-            --pad5-color: #fdcb6e;
-            --pad6-color: #00cec9;
-            --pad7-color: #e84393;
-            --pad8-color: #6c5ce7;
-            --pad-common: #2d3436;
-            --dark-bg: #111;
-            --text-color: #fff;
+            /* Realistic drum kit colors */
+            --primary-accent: #D4A574; /* Warm gold/brass */
+            --secondary-accent: #8B6914; /* Dark gold */
+            --third-accent: #A0522D; /* Sienna brown */
+            --pad1-color: #8B4513; /* Kick drum - dark brown */
+            --pad2-color: #CD853F; /* Snare - sandy brown */
+            --pad3-color: #A0522D; /* Tom - sienna */
+            --pad4-color: #D2B48C; /* Clap - tan */
+            --pad5-color: #DEB887; /* Claves - burlywood */
+            --pad6-color: #C0C0C0; /* Hi-hat - silver */
+            --pad7-color: #B8860B; /* Crash - dark golden rod */
+            --pad8-color: #DAA520; /* Shaker - golden rod */
+            --pad-common: #3E2723; /* Dark wood brown */
+            --dark-bg: #1A1A1A; /* Darker background */
+            --text-color: #F5F5DC; /* Beige text */
             --grid-gap: 15px;
         }
         
         body {
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Inter', sans-serif;
             color: var(--text-color);
             background-color: var(--dark-bg);
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(0, 168, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 90% 80%, rgba(255, 94, 87, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(151, 51, 238, 0.05) 0%, transparent 70%);
+                radial-gradient(circle at 20% 30%, rgba(212, 165, 116, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(160, 82, 45, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(139, 69, 19, 0.04) 0%, transparent 70%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -53,74 +53,23 @@
             touch-action: manipulation;
         }
         
-        /* Background grid lines - Made static */
+        /* Subtle wood grain texture background */
         body::before {
             content: "";
             position: absolute;
-            width: 200%;
-            height: 200%;
-            top: -50%;
-            left: -50%;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
             background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-            background-position: center center;
-            transform: perspective(500px) rotateX(60deg);
+                linear-gradient(45deg, rgba(139, 69, 19, 0.02) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(139, 69, 19, 0.02) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(160, 82, 45, 0.02) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(160, 82, 45, 0.02) 75%);
+            background-size: 60px 60px;
+            background-position: 0 0, 0 30px, 30px -30px, -30px 0px;
             z-index: -1;
-            /* animation: grid-movement 30s linear infinite; */ /* Removed animation */
-        }
-        
-        /* Light orbs in background */
-        .light-orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(10px); /* Reduced blur */
             opacity: 0.3;
-            z-index: -1;
-            animation: float 15s ease-in-out infinite;
-        }
-        
-        .light-orb:nth-child(1) {
-            background-color: var(--primary-glow);
-            width: 300px;
-            height: 300px;
-            top: 10%;
-            left: 15%;
-            animation-delay: 0s;
-        }
-        
-        .light-orb:nth-child(2) {
-            background-color: var(--secondary-glow);
-            width: 200px;
-            height: 200px;
-            bottom: 10%;
-            right: 15%;
-            animation-delay: -5s;
-        }
-        
-        .light-orb:nth-child(3) {
-            background-color: var(--third-glow);
-            width: 250px;
-            height: 250px;
-            bottom: 20%;
-            left: 20%;
-            animation-delay: -10s;
-        }
-        
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0) translateX(0);
-            }
-            25% {
-                transform: translateY(-30px) translateX(20px);
-            }
-            50% {
-                transform: translateY(0) translateX(40px);
-            }
-            75% {
-                transform: translateY(30px) translateX(20px);
-            }
         }
         
         .machine-title {
@@ -128,53 +77,36 @@
             top: 20px;
             width: 100%;
             text-align: center;
+            font-family: 'Roboto Slab', serif;
             font-size: 2.5rem;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--text-color);
+            letter-spacing: 3px;
+            color: var(--primary-accent);
             text-shadow: 
-                0 0 5px var(--primary-glow),
-                0 0 10px var(--primary-glow),
-                0 0 15px var(--primary-glow);
-            opacity: 0.8;
+                2px 2px 4px rgba(0, 0, 0, 0.8),
+                0 0 20px rgba(212, 165, 116, 0.3);
+            opacity: 0.95;
             transform: translateZ(0);
-            animation: title-glow 2s ease-in-out infinite alternate;
-        }
-        
-        @keyframes title-glow {
-            0% {
-                text-shadow: 
-                    0 0 5px var(--primary-glow),
-                    0 0 10px var(--primary-glow),
-                    0 0 15px var(--primary-glow);
-            }
-            100% {
-                text-shadow: 
-                    0 0 10px var(--primary-glow),
-                    0 0 20px var(--primary-glow),
-                    0 0 30px var(--primary-glow),
-                    0 0 40px var(--primary-glow);
-            }
         }
         
         .container {
             max-width: 900px;
             width: 100%;
             padding: 30px;
-            background: rgba(10, 10, 15, 0.85); /* Adjusted alpha, removed backdrop-filter */
-            border-radius: 15px;
-            /* backdrop-filter: blur(10px); */ /* Removed */
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(145deg, rgba(62, 39, 35, 0.95), rgba(45, 26, 22, 0.95));
+            border-radius: 20px;
+            border: 2px solid rgba(212, 165, 116, 0.2);
             box-shadow: 
-                0 0 20px rgba(0, 0, 0, 0.5),
-                0 0 30px rgba(0, 168, 255, 0.2),
-                0 0 40px rgba(151, 51, 238, 0.1);
+                0 20px 40px rgba(0, 0, 0, 0.7),
+                inset 0 1px 0 rgba(212, 165, 116, 0.1),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.3);
             position: relative;
             z-index: 1;
             overflow: hidden;
         }
         
-        /* Animated border glow - Simplified */
+        /* Realistic border with wood/metal finish */
         .container::before {
             content: "";
             position: absolute;
@@ -183,29 +115,14 @@
             right: -2px;
             bottom: -2px;
             z-index: -1;
-            background: linear-gradient(45deg, 
-                var(--pad1-color), 
-                var(--pad2-color), 
-                var(--pad3-color), 
-                var(--pad4-color), 
-                var(--pad5-color), 
-                var(--pad6-color), 
-                var(--pad7-color), 
-                var(--pad8-color));
-            background-size: 500%; /* Keep for gradient, but animation is simpler */
-            border-radius: 16px;
-            opacity: 0.5;
-            /* filter: blur(5px); */ /* Removed blur */
-            animation: simpler-border-pulse 5s linear infinite alternate; /* Simplified animation */
-        }
-        
-        @keyframes simpler-border-pulse { /* New simpler animation */
-            0% {
-                opacity: 0.4;
-            }
-            100% {
-                opacity: 0.7;
-            }
+            background: linear-gradient(145deg, 
+                var(--primary-accent), 
+                var(--secondary-accent), 
+                var(--third-accent), 
+                var(--primary-accent));
+            background-size: 200%;
+            border-radius: 22px;
+            opacity: 0.4;
         }
         
         /* Visualizer behind the pads */
@@ -228,7 +145,11 @@
             height: 5px;
             border-radius: 4px;
             transition: height 0.1s ease;
-            opacity: 0.7;
+            opacity: 0.6;
+            background: linear-gradient(to top, 
+                var(--secondary-accent), 
+                var(--primary-accent));
+            box-shadow: 0 0 4px rgba(212, 165, 116, 0.3);
         }
         
         .drum-pads {
@@ -242,7 +163,6 @@
         
         .drum-pad {
             position: relative;
-            /* background-color: var(--pad-common); */ /* Overridden below */
             border: none;
             color: var(--text-color);
             padding: 0;
@@ -250,11 +170,12 @@
             text-decoration: none;
             font-size: 28px;
             cursor: pointer;
-            border-radius: 8px;
+            border-radius: 12px;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 
-                0 5px 15px rgba(0, 0, 0, 0.5),
-                0 0 0 2px rgba(255, 255, 255, 0.05);
+                0 8px 20px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.3);
             -webkit-tap-highlight-color: rgba(0,0,0,0);
             user-select: none;
             touch-action: manipulation;
@@ -269,18 +190,49 @@
             justify-content: flex-start;
             align-items: center;
             
-            background-color: rgba(45, 52, 54, 0.9); /* Adjusted alpha, removed backdrop-filter */
-            /* backdrop-filter: blur(3px); */ /* Removed */
+            background: linear-gradient(145deg, 
+                rgba(var(--pad-color-rgb), 0.8), 
+                rgba(var(--pad-color-rgb), 0.6));
+            
+            /* Wood/metal texture overlay */
+            background-image: 
+                radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                radial-gradient(circle at 70% 70%, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px, 25px 25px;
         }
         
-        .drum-pad[data-key="1"] { --pad-color: var(--pad1-color); }
-        .drum-pad[data-key="2"] { --pad-color: var(--pad2-color); }
-        .drum-pad[data-key="3"] { --pad-color: var(--pad3-color); }
-        .drum-pad[data-key="4"] { --pad-color: var(--pad4-color); }
-        .drum-pad[data-key="5"] { --pad-color: var(--pad5-color); }
-        .drum-pad[data-key="6"] { --pad-color: var(--pad6-color); }
-        .drum-pad[data-key="7"] { --pad-color: var(--pad7-color); }
-        .drum-pad[data-key="8"] { --pad-color: var(--pad8-color); }
+        .drum-pad[data-key="1"] { 
+            --pad-color: var(--pad1-color); 
+            --pad-color-rgb: 139, 69, 19; /* Kick drum */
+        }
+        .drum-pad[data-key="2"] { 
+            --pad-color: var(--pad2-color); 
+            --pad-color-rgb: 205, 133, 63; /* Snare */
+        }
+        .drum-pad[data-key="3"] { 
+            --pad-color: var(--pad3-color); 
+            --pad-color-rgb: 160, 82, 45; /* Tom */
+        }
+        .drum-pad[data-key="4"] { 
+            --pad-color: var(--pad4-color); 
+            --pad-color-rgb: 210, 180, 140; /* Clap */
+        }
+        .drum-pad[data-key="5"] { 
+            --pad-color: var(--pad5-color); 
+            --pad-color-rgb: 222, 184, 135; /* Claves */
+        }
+        .drum-pad[data-key="6"] { 
+            --pad-color: var(--pad6-color); 
+            --pad-color-rgb: 192, 192, 192; /* Hi-hat */
+        }
+        .drum-pad[data-key="7"] { 
+            --pad-color: var(--pad7-color); 
+            --pad-color-rgb: 184, 134, 11; /* Crash */
+        }
+        .drum-pad[data-key="8"] { 
+            --pad-color: var(--pad8-color); 
+            --pad-color-rgb: 218, 165, 32; /* Shaker */
+        }
         
         .drum-pad::before {
             content: '';
@@ -289,14 +241,12 @@
             left: 0;
             right: 0;
             bottom: 0;
-            border-radius: 8px;
-            padding: 2px;
-            background: linear-gradient(120deg, var(--pad-color), transparent, var(--pad-color));
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0.7;
+            border-radius: 12px;
+            background: linear-gradient(145deg, 
+                rgba(255, 255, 255, 0.1), 
+                transparent 30%, 
+                rgba(0, 0, 0, 0.2));
+            opacity: 0.6;
             transition: opacity 0.3s;
         }
         
@@ -307,7 +257,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at center, var(--pad-color), transparent 70%);
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.2), transparent 50%);
             opacity: 0;
             transition: opacity 0.3s;
             z-index: 1;
@@ -315,57 +265,71 @@
         }
         
         .drum-pad:hover {
-            transform: translateY(-2px);
+            transform: translateY(-3px);
             box-shadow: 
-                0 7px 20px rgba(0, 0, 0, 0.6),
-                0 0 0 2px rgba(255, 255, 255, 0.1),
-                0 0 15px rgba(var(--pad-color), 0.5);
+                0 12px 25px rgba(0, 0, 0, 0.7),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.4),
+                0 0 20px rgba(var(--pad-color-rgb), 0.3);
         }
         
         .drum-pad:hover::before {
-            opacity: 1;
+            opacity: 0.8;
         }
         
         .drum-pad:active, .drum-pad.active {
-            transform: translateY(3px);
+            transform: translateY(2px);
             box-shadow: 
-                0 2px 5px rgba(0, 0, 0, 0.7),
-                0 0 0 2px rgba(255, 255, 255, 0.12),
-                0 0 30px var(--pad-color);
+                0 4px 10px rgba(0, 0, 0, 0.8),
+                inset 0 2px 5px rgba(0, 0, 0, 0.5),
+                inset 0 -1px 0 rgba(255, 255, 255, 0.1);
         }
         
         .drum-pad.active::after {
-            opacity: 0.5;
-            animation: pulse 0.5s ease-out;
+            opacity: 0.6;
+            animation: realistic-pulse 0.4s ease-out;
         }
         
-        @keyframes pulse {
-            0% { opacity: 0.5; transform: scale(1); }
-            100% { opacity: 0; transform: scale(1.5); }
+        @keyframes realistic-pulse {
+            0% { 
+                opacity: 0.6; 
+                transform: scale(1); 
+                background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.4), transparent 50%);
+            }
+            100% { 
+                opacity: 0; 
+                transform: scale(1.1); 
+                background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1), transparent 70%);
+            }
         }
         
         .pad-number {
             font-size: 32px;
-            font-weight: bold;
+            font-weight: 700;
             flex: 0 0 auto;
             margin: 0 15px 0 25px;
             color: var(--pad-color);
             position: relative;
             z-index: 2;
-            text-shadow: 0 0 5px var(--pad-color), 0 0 10px var(--pad-color);
+            text-shadow: 
+                1px 1px 2px rgba(0, 0, 0, 0.8),
+                0 0 10px rgba(var(--pad-color-rgb), 0.4);
+            filter: drop-shadow(0 0 3px rgba(var(--pad-color-rgb), 0.3));
         }
         
         .sound-label {
-            font-family: 'Fascinate', cursive;
-            font-size: 25px;
+            font-family: 'Inter', sans-serif;
+            font-size: 24px;
+            font-weight: 600;
             color: var(--text-color);
             flex: 1 1 auto;
             text-align: left;
             position: relative;
             z-index: 2;
-            opacity: 0.9;
-            letter-spacing: 1px;
-            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            opacity: 0.95;
+            letter-spacing: 0.5px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+            text-transform: uppercase;
         }
         
         .ripple {
@@ -394,18 +358,28 @@
         
         .particle {
             position: absolute;
-            width: 6px;
-            height: 6px;
-            background: white;
+            width: 4px;
+            height: 4px;
+            background: var(--primary-accent);
             border-radius: 50%;
-            animation: particle-float 3s ease-in-out infinite;
+            animation: particle-float 2s ease-in-out infinite;
             opacity: 0;
             z-index: 3;
+            box-shadow: 0 0 4px rgba(212, 165, 116, 0.6);
         }
         
         @keyframes particle-float {
-            0% { transform: translateY(0) scale(1); opacity: 0.7; }
-            100% { transform: translateY(-100px) scale(0); opacity: 0; }
+            0% { 
+                transform: translateY(0) scale(1); 
+                opacity: 0.8; 
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% { 
+                transform: translateY(-60px) scale(0.3); 
+                opacity: 0; 
+            }
         }
         
         @media (max-width: 480px) {
@@ -433,11 +407,7 @@
     </style>
 </head>
 <body>
-    <div class="light-orb"></div>
-    <div class="light-orb"></div>
-    <div class="light-orb"></div>
-    
-    <h1 class="machine-title">Cyber Drums</h1>
+    <h1 class="machine-title">Virtual Drum Kit</h1>
     
     <div class="container">
         <div class="visualizer"></div>
@@ -500,9 +470,10 @@
                 heightPercent = heightPercent * (0.7 + 0.3 * curve);
                 let height = Math.max(heightPercent * maxHeight, 5);
                 bar.style.height = height + 'px';
-                const hue = 180 + (i / bars.length) * 180;
-                bar.style.background = `hsl(${hue}, 100%, 65%)`;
-                bar.style.boxShadow = `0 0 10px hsl(${hue}, 100%, 65%)`;
+                // Natural drum kit colors for visualizer
+                const warmHue = 30 + (i / bars.length) * 50; // Warm browns to golds
+                bar.style.background = `linear-gradient(to top, hsl(${warmHue}, 60%, 40%), hsl(${warmHue}, 70%, 60%))`;
+                bar.style.boxShadow = `0 0 8px hsla(${warmHue}, 70%, 60%, 0.4)`;
             }
             drawVisual = requestAnimationFrame(animateVisualizer);
         }
@@ -703,19 +674,21 @@
             const padCenterX = rect.left + rect.width/2;
             const padCenterY = rect.top + rect.height/2;
             const particlesContainer = document.querySelector('.particles-container');
-            const padColor = getComputedStyle(document.documentElement).getPropertyValue(`--pad${key}-color`).trim();
             
-            for (let i = 0; i < 2; i++) { // Reduced particle count from 12 to 2
+            for (let i = 0; i < 3; i++) { // Slightly increased for better effect
                 const particle = document.createElement('div');
                 particle.className = 'particle';
-                const x = padCenterX - 3 + (Math.random() * 6);
-                const y = padCenterY - 3 + (Math.random() * 6);
+                const x = padCenterX - 2 + (Math.random() * 4);
+                const y = padCenterY - 2 + (Math.random() * 4);
                 particle.style.left = `${x}px`; particle.style.top = `${y}px`;
-                particle.style.background = padColor;
-                // particle.style.boxShadow = `0 0 6px ${padColor}`; // Removed for performance
-                const size = 2 + Math.random() * 4;
+                
+                // Use warm, natural colors for particles
+                const warmColors = ['#D4A574', '#B8860B', '#DAA520', '#CD853F'];
+                particle.style.background = warmColors[Math.floor(Math.random() * warmColors.length)];
+                
+                const size = 2 + Math.random() * 3;
                 particle.style.width = `${size}px`; particle.style.height = `${size}px`;
-                const duration = 0.5 + Math.random() * 1; const delay = Math.random() * 0.2;
+                const duration = 1 + Math.random() * 1; const delay = Math.random() * 0.2;
                 particle.style.animation = `particle-float ${duration}s ease-out ${delay}s`;
                 particlesContainer.appendChild(particle);
                 setTimeout(() => { particle.remove(); }, (duration + delay) * 1000);
